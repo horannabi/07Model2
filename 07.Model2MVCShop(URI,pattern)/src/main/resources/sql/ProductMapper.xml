@@ -69,7 +69,7 @@
 														<if test="searchPriceCondition==0">
 															 order by p.price desc
 														</if>
-														<if test="searchPriceCondition==0">
+														<if test="searchPriceCondition==1">
 															 order by p.price
 														</if>
 														, p.PROD_NO
@@ -113,19 +113,48 @@
 											FROM product p, transaction t
 						
 								<where>
-									p.PROD_NO=t.PROD_NO(+)
-									<if test="searchCondition != null">
-									<if test="searchCondition == 0 and searchKeyword !='' ">
-										 and p.PROD_NO= #{searchKeyword}
-									</if>
-									<if test="searchCondition == 1 and searchKeyword !='' ">
-										 and p.PROD_NAME LIKE '%'||#{searchKeyword}||'%'
-									</if>
-									<if test="searchCondition == 2 and searchKeyword !='' ">
-										 and p.PRICE= #{searchKeyword}
-									</if>	
-							</if>
-						</where> ) countTable						
+													p.PROD_NO=t.PROD_NO(+)
+												<if test="searchCondition != null">
+												
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				and p.PROD_NO= #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				and p.PROD_NAME LIKE '%'||#{searchKeyword}||'%'
+													</if>
+													<if test="searchCondition == 2 and searchKeyword !='' ">
+										 				and p.PRICE= #{searchKeyword}
+													</if>
+													
+													<if test="searchPriceCondition!=null">
+														<if test="searchPriceCondition==0">
+															 order by p.price desc
+														</if>
+														<if test="searchPriceCondition==1">
+															 order by p.price
+														</if>
+														, p.PROD_NO
+													</if>
+													
+													<if test="searchPriceCondition==null">
+													 order by p.PROD_NO
+													</if>
+												</if>
+												
+												<if test="searchCondition == null and searchPriceCondition !=null">
+													<if test="searchPriceCondition==0">
+														order by p.price desc
+													</if>
+													<if test="searchPriceCondition==1">
+														order by p.price
+													</if>
+													, p.PROD_NO
+												</if>
+												
+												<if test="searchCondition == null and searchPriceCondition ==null">
+													order by p.PROD_NO
+												</if>
+											</where> ) countTable						
 	 </select>
 	 
 </mapper>

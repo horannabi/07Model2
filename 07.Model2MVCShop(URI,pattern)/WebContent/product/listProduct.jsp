@@ -102,7 +102,7 @@
 			<input type="radio" name="searchPriceCondition"  value="0"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==0 ? "checked" : "" }>높은가격순
 			<input type="radio" name="searchPriceCondition"  value="1"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==1 ? "checked" : "" }>낮은가격순
 			 <c:if test = "${search.searchCondition != null || search.searchPriceCondition != null}">
-				<b><a href="/listProduct.do?menu=${param.menu}">필터해제</a></b>
+				<b><a href="/product/listProduct.do?menu=${param.menu}">필터해제</a></b>
 			</c:if>
 		</td>
 		<td align="right" width="70">
@@ -187,10 +187,10 @@
 			<td></td>
 			
 			<c:if test = "${param.menu == 'manage'}">
-				<td align="left"><a href="/updateProductView.do?prodNo=${product.prodNo }&menu=manage">${product.prodName }</a></td>
+				<td align="left"><a href="/product/updateProduct.do?prodNo=${product.prodNo}&menu=manage">${product.prodName }</a></td>
 			</c:if>
 			<c:if test = "${param.menu == 'search'}">
-				<td align="left"><a href="/getProduct.do?prodNo=${product.prodNo }&menu=search">${product.prodName }</a></td>
+				<td align="left"><a href="/product/getProduct.do?prodNo=${product.prodNo}&menu=search">${product.prodName }</a></td>
 			</c:if>
 		<td></td>
 		<td align="left">${product.price }</td>
@@ -199,9 +199,7 @@
 		<td></td>
 		<td align="left">${product.regDate }</td>
 		<td></td>
-		<td align="left">
-			
-					
+		<td align="left">					
 					
 					<c:if test = "${product.prodAmount > 0 }" >
 					판매중
