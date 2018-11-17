@@ -65,9 +65,33 @@
 													<if test="searchCondition == 2 and searchKeyword !='' ">
 										 				and p.PRICE= #{searchKeyword}
 													</if>
+													<if test="searchPriceCondition!=null">
+														<if test="searchPriceCondition==0">
+															 order by p.price desc
+														</if>
+														<if test="searchPriceCondition==0">
+															 order by p.price
+														</if>
+														, p.PROD_NO
+													</if>
+													<if test="searchPriceCondition==null">
+													 order by p.PROD_NO
+													</if>
+												</if>
+												<if test="searchCondition == null and searchPriceCondition !=null">
+													<if test="searchPriceCondition==0">
+														order by p.price desc
+													</if>
+													<if test="searchPriceCondition==1">
+														order by p.price
+													</if>
+													, p.PROD_NO
+												</if>
+												<if test="searchCondition == null and searchPriceCondition ==null">
+													order by p.PROD_NO
 												</if>
 											</where>
-											ORDER BY p.prod_no ) inner_table
+											) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
