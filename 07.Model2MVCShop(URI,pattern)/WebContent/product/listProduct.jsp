@@ -43,7 +43,7 @@
 <body bgcolor="#ffffff" text="#000000">
 
 <div style="width:98%; margin-left:10px;">
-  <form name="detailForm" action="/listProduct.do?menu=${param.menu}" method="post"> 
+  <form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post"> 
  
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -102,7 +102,7 @@
 			<input type="radio" name="searchPriceCondition"  value="0"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==0 ? "checked" : "" }>높은가격순
 			<input type="radio" name="searchPriceCondition"  value="1"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==1 ? "checked" : "" }>낮은가격순
 			 <c:if test = "${search.searchCondition != null || search.searchPriceCondition != null}">
-				<b><a href="/product/listProduct.do?menu=${param.menu}">필터해제</a></b>
+				<b><a href="/product/listProduct?menu=${param.menu}">필터해제</a></b>
 			</c:if>
 		</td>
 		<td align="right" width="70">
@@ -187,10 +187,10 @@
 			<td></td>
 			
 			<c:if test = "${param.menu == 'manage'}">
-				<td align="left"><a href="/product/updateProduct.do?prodNo=${product.prodNo}&menu=manage">${product.prodName }</a></td>
+				<td align="left"><a href="/product/updateProduct?prodNo=${product.prodNo}&menu=manage">${product.prodName }</a></td>
 			</c:if>
 			<c:if test = "${param.menu == 'search'}">
-				<td align="left"><a href="/product/getProduct.do?prodNo=${product.prodNo}&menu=search">${product.prodName }</a></td>
+				<td align="left"><a href="/product/getProduct?prodNo=${product.prodNo}&menu=search">${product.prodName }</a></td>
 			</c:if>
 		<td></td>
 		<td align="left">${product.price }</td>
@@ -207,7 +207,7 @@
 					<c:if test = "${product.prodAmount == 0 }" >
 					재고없음
 						<c:if test = "${param.menu=='manage'&&fn:trim(product.proTranCode)=='1'}" >
-						<a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
+						<a href="/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
 						</c:if>
 						<c:if test = "${param.menu=='manage'&&fn:trim(product.proTranCode)=='2'}" >
 								(배송중)
@@ -220,7 +220,7 @@
 		</td>	
 		<c:if test = "${product.prodAmount > 0 }">
 		<td></td>
-		<td align="center"><a href="/addCart.do?prodNo=${product.prodNo}"><i class="fas fa-shopping-cart"></i></a></td>
+		<td align="center"><a href="/addCart?prodNo=${product.prodNo}"><i class="fas fa-shopping-cart"></i></a></td>
 		</c:if>
 	</tr>
 	<tr>

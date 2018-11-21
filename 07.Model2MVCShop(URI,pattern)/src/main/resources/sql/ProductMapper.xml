@@ -65,27 +65,28 @@
 													<if test="searchCondition == 2 and searchKeyword !='' ">
 										 				and p.PRICE= #{searchKeyword}
 													</if>
-													<if test="searchPriceCondition!=null">
+													
+													 <if test="searchPriceCondition!=null">
 														<if test="searchPriceCondition==0">
-															 order by p.price desc
+															 order by p.price desc, p.PROD_NO
 														</if>
 														<if test="searchPriceCondition==1">
-															 order by p.price
+															 order by p.price, p.PROD_NO
 														</if>
-														, p.PROD_NO
+	
 													</if>
 													<if test="searchPriceCondition==null">
 													 order by p.PROD_NO
-													</if>
+													</if> 
 												</if>
 												<if test="searchCondition == null and searchPriceCondition !=null">
 													<if test="searchPriceCondition==0">
-														order by p.price desc
+														order by p.price desc, p.PROD_NO
 													</if>
 													<if test="searchPriceCondition==1">
-														order by p.price
+														order by p.price, p.PROD_NO
 													</if>
-													, p.PROD_NO
+		
 												</if>
 												<if test="searchCondition == null and searchPriceCondition ==null">
 													order by p.PROD_NO
@@ -112,7 +113,7 @@
 	  	FROM(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, t.tran_status_code
 											FROM product p, transaction t
 						
-								<where>
+									<where>
 													p.PROD_NO=t.PROD_NO(+)
 												<if test="searchCondition != null">
 												
@@ -126,31 +127,28 @@
 										 				and p.PRICE= #{searchKeyword}
 													</if>
 													
-													<if test="searchPriceCondition!=null">
+													 <if test="searchPriceCondition!=null">
 														<if test="searchPriceCondition==0">
-															 order by p.price desc
+															 order by p.price desc, p.PROD_NO
 														</if>
 														<if test="searchPriceCondition==1">
-															 order by p.price
+															 order by p.price, p.PROD_NO
 														</if>
-														, p.PROD_NO
-													</if>
-													
+					
+													</if> 
 													<if test="searchPriceCondition==null">
 													 order by p.PROD_NO
 													</if>
 												</if>
-												
 												<if test="searchCondition == null and searchPriceCondition !=null">
 													<if test="searchPriceCondition==0">
-														order by p.price desc
+														order by p.price desc, p.PROD_NO
 													</if>
 													<if test="searchPriceCondition==1">
-														order by p.price
+														order by p.price, p.PROD_NO
 													</if>
-													, p.PROD_NO
+		
 												</if>
-												
 												<if test="searchCondition == null and searchPriceCondition ==null">
 													order by p.PROD_NO
 												</if>

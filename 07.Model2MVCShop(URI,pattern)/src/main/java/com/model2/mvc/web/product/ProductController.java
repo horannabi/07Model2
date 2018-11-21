@@ -70,10 +70,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct(@ModelAttribute("product") Product product, Model model, HttpServletResponse response, @CookieValue(value="history",required=false) String history) throws Exception { // 이부분 먹나 확인(-)
+	public String getProduct(@RequestParam("prodNo") int prodNo, Model model, HttpServletResponse response, @CookieValue(value="history",required=false) String history) throws Exception { // 이부분 먹나 확인(-)
 		System.out.println("/getProduct");
-		int prodNo = product.getProdNo();
-		product = productService.getProduct(prodNo);
+		Product product = productService.getProduct(prodNo);
 		
 		//if(cookie!=null&&cookie.getName().equals("history")) {
 		if(history!=null) {
@@ -139,8 +138,9 @@ public class ProductController {
 		return "redirect:/getProduct?prodNo="+product.getProdNo();
 		//포워드하면 string array 오류?
 	}
-	
-	@RequestMapping("/listProduct")
+
+
+	@RequestMapping(value="listProduct")
 	public String listProduct(@ModelAttribute("search") Search search , Model model) throws Exception{
 		System.out.println("/listProduct");
 	
