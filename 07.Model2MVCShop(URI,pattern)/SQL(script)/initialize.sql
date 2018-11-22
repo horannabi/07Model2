@@ -5,10 +5,11 @@ DROP TABLE users;
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
-
+DROP SEQUENCE seq_cart_cart_no;
 
 CREATE SEQUENCE seq_product_prod_no		 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_cart_cart_no		 	INCREMENT BY 1 START WITH 10000;
 
 
 CREATE TABLE users ( 
@@ -51,6 +52,14 @@ CREATE TABLE transaction (
 	dlvy_date 				DATE,
 	tran_amount			NUMBER(4),
 	PRIMARY KEY(tran_no)
+);
+
+CREATE TABLE cart (
+	cart_no 					NUMBER 			NOT NULL,
+	prod_no						NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	user_id						VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	cart_amount					NUMBER(4),
+	cart_code					CHAR(1)
 );
 
 

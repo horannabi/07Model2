@@ -100,6 +100,14 @@ function history(){
 			<tr>
 				<td class="Depth03"><a href="javascript:history()">최근 본 상품</a></td>
 			</tr>
+			<c:if test="${ !empty user && user.role == 'user'}">
+			<tr>
+				<td class="Depth03">
+					<a href="/cart/listCart"   target="rightFrame">장바구니</a>
+				</td>
+			</tr>
+			</c:if>
+			
 		</table>
 	</td>
 </tr>

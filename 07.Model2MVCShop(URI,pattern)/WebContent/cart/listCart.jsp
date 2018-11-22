@@ -27,7 +27,8 @@
 <head>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-<title>상품 목록조회</title>
+
+<title>장바구니</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
@@ -43,7 +44,7 @@
 <body bgcolor="#ffffff" text="#000000">
 
 <div style="width:98%; margin-left:10px;">
-  <form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post"> 
+  <form name="detailForm" action="/cart/listCart" method="post"> 
  
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -60,12 +61,7 @@
 					<% }else if(mode.equals("search")) {%>
 							상품 목록 조회
 					<% } %>	--%>
-					<c:if test = "${param.menu == 'manage'}">
-						상품 관리
-					</c:if>
-					<c:if test = "${param.menu == 'search'}">
-						상품 목록 조회
-					</c:if>
+						장바구니
 					</td>
 				</tr>
 			</table>
@@ -102,7 +98,7 @@
 			<input type="radio" name="searchPriceCondition"  value="0"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==0 ? "checked" : "" }>높은가격순
 			<input type="radio" name="searchPriceCondition"  value="1"  ${ ! empty search.searchPriceCondition && search.searchPriceCondition==1 ? "checked" : "" }>낮은가격순
 			 <c:if test = "${search.searchCondition != null || search.searchPriceCondition != null}">
-				<b><a href="/product/listProduct?menu=${param.menu}">필터해제</a></b>
+				<b><a href="/listCart">필터해제</a></b>
 			</c:if>
 		</td>
 		<td align="right" width="70">
@@ -138,18 +134,21 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="100">수량</td>
-		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
-		<c:if test = "${product.proTranCode==null || fn:trim(product.proTranCode)=='0'||fn:trim(product.proTranCode)=='4'}">
-			<td class="ct_line02"></td>
-			<td class="ct_list_b" width="50">장바구니</td>	
+		<td class="ct_line02"></td>
+		<c:if test = "${cart.cartProd.prodAmount >= cart.cartAmount }" >
+		<td class="ct_list_b" width="50">구매</td>	
 		</c:if>
+		<td class="ct_line02"></td>
+		<td class="ct_list_b" width="50">삭제</td>	
+		<td class="ct_line02"></td>
+		
+		
 	</tr>
 	<tr>
-		<td colspan="14" bgcolor="808285" height="1"></td>
+		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 	<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
 	<% 	
@@ -180,51 +179,39 @@
 	</tr>	
 	<% } %>  %>/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
 	<c:set var="i" value="0" />
-	<c:forEach var="product" items="${list}">
+	<c:forEach var="cart" items="${list}">
 		<c:set var="i" value="${ i+1 }" />
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
 			
-			<c:if test = "${param.menu == 'manage'}">
-				<td align="left"><a href="/product/updateProduct?prodNo=${product.prodNo}&menu=manage">${product.prodName }</a></td>
-			</c:if>
-			<c:if test = "${param.menu == 'search'}">
-				<td align="left"><a href="/product/getProduct?prodNo=${product.prodNo}&menu=search">${product.prodName }</a></td>
-			</c:if>
+				<td align="left"><a href="/getProduct?prodNo=${cart.cartProd.prodNo}&menu=search">${cart.cartProd.prodName}</a></td>
+	
 		<td></td>
-		<td align="left">${product.price }</td>
+		<td align="left">${cart.cartProd.price}</td>
 		<td></td>
-		<td align="center">${product.prodAmount }</td>
+		<td align="left">${cart.cartProd.regDate}</td>
 		<td></td>
-		<td align="left">${product.regDate }</td>
-		<td></td>
-		<td align="left">					
-					
-					<c:if test = "${product.prodAmount > 0 }" >
+		<td align="left">
+			
+					<c:if test = "${cart.cartProd.prodAmount > 0 }" >
 					판매중
 					</c:if>
-					<c:if test = "${product.prodAmount == 0 }" >
+					<c:if test = "${cart.cartProd.prodAmount == 0 }" >
 					재고없음
-						<c:if test = "${param.menu=='manage'&&fn:trim(product.proTranCode)=='1'}" >
-						<a href="/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
-						</c:if>
-						<c:if test = "${param.menu=='manage'&&fn:trim(product.proTranCode)=='2'}" >
-								(배송중)
-						</c:if>
-						<c:if test = "${param.menu=='manage'&&fn:trim(product.proTranCode)=='3'}" >
-								(배송완료)
-						</c:if>
 					</c:if>
 		
 		</td>	
-		<c:if test = "${product.prodAmount > 0 }">
+		<c:if test = "${cart.cartProd.prodAmount >= cart.cartAmount }" >
 		<td></td>
-		<td align="center"><a href="/cart/addCart?prodNo=${product.prodNo}"><i class="fas fa-shopping-cart"></i></a></td>
+		<td align="center"><a href="/purchase/addPurchase?prodNo=${cart.cartProd.prodNo}">구매</a></td>
 		</c:if>
+		<td></td>
+		<td align="center"><a href="/cart/deleteCart?prodNo=${cart.cartProd.prodNo}">삭제</a></td>
+		<td></td>
 	</tr>
 	<tr>
-		<td colspan="14" bgcolor="D6D7D6" height="1"></td>
+		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>
 	</c:forEach>
 </table>
