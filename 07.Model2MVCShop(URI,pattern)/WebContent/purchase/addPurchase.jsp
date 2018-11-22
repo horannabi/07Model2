@@ -31,7 +31,12 @@
 	</tr>
 	<tr>
 		<td>구매자아이디</td>
-		<td>${user.userId}</td>
+		<td>${ user.userId }</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>구매수량</td>
+		<td>${purchase.tranAmount} </td>
 		<td></td>
 	</tr>
 	<tr>

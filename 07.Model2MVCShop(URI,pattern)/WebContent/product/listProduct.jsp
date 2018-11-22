@@ -149,7 +149,7 @@
 		</c:if>
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="808285" height="1"></td>
+		<td colspan="14" bgcolor="808285" height="1"></td>
 	</tr>
 	<%-- /////////////////////// EL / JSTL 利侩栏肺 林籍 贸府 ////////////////////////
 	<% 	
@@ -224,7 +224,7 @@
 		</c:if>
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+		<td colspan="14" bgcolor="D6D7D6" height="1"></td>
 	</tr>
 	</c:forEach>
 </table>

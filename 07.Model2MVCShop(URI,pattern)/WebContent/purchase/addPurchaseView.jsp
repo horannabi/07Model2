@@ -21,6 +21,13 @@
 <script type="text/javascript">
 <!--
 function fncAddPurchase() {
+	var tranAmount=document.addPurchase.tranAmount.value;
+	var prodAmount=${product.prodAmount};
+	
+	if(tranAmount > prodAmount){
+		alert("구매가능수량을 초과하였습니다.")
+		return;
+	}
 	document.addPurchase.submit();
 }
 -->
@@ -82,6 +89,18 @@ function fncAddPurchase() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">
+			구매가능수량 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">${product.prodAmount}</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			상품상세정보 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -141,6 +160,19 @@ function fncAddPurchase() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">구매수량</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input type="text" name="tranAmount" 	class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="20" />
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자이름</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -157,7 +189,7 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="receiverPhone" class="ct_input_g" 
-							style="width: 100px; height: 19px" maxLength="20" value="null" />
+							style="width: 100px; height: 19px" maxLength="20" />
 		</td>
 	</tr>
 	<tr>
@@ -168,7 +200,7 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="divyAddr" class="ct_input_g" 
-							style="width: 100px; height: 19px" maxLength="20" 	value="null" />
+							style="width: 100px; height: 19px" maxLength="20" />
 		</td>
 	</tr>
 	<tr>

@@ -16,6 +16,7 @@ public class Purchase {
 	private String receiverPhone;
 	private String tranCode;
 	private int tranNo;
+	private int tranAmount;
 	
 	public Purchase(){
 	}
@@ -87,14 +88,19 @@ public class Purchase {
 		this.tranNo = tranNo;
 	}
 	
+	public int getTranAmount() {
+		return tranAmount;
+	}
+
+	public void setTranAmount(int tranAmount) {
+		this.tranAmount = tranAmount;
+	}
+
 	@Override
 	public String toString() {
-		return "Purchase [buyer=" + buyer + ", divyAddr=" + divyAddr
-				+ ", divyDate=" + divyDate + ", divyRequest=" + divyRequest
-				+ ", orderDate=" + orderDate + ", paymentOption="
-				+ paymentOption + ", purchaseProd=" + purchaseProd
-				+ ", receiverName=" + receiverName + ", receiverPhone="
-				+ receiverPhone + ", tranCode=" + tranCode + ", tranNo="
-				+ tranNo + "]";
+		return "Purchase [buyer=" + buyer + ", divyAddr=" + divyAddr + ", divyDate=" + divyDate + ", divyRequest="
+				+ divyRequest + ", orderDate=" + orderDate + ", paymentOption=" + paymentOption + ", purchaseProd="
+				+ purchaseProd + ", receiverName=" + receiverName + ", receiverPhone=" + receiverPhone + ", tranCode="
+				+ tranCode + ", tranNo=" + tranNo + ", tranAmount=" + tranAmount + "]";
 	}
 }

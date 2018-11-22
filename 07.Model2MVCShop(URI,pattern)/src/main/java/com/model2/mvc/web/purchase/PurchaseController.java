@@ -75,7 +75,10 @@ public class PurchaseController {
 	public ModelAndView addPurchase(@ModelAttribute("purchase") Purchase purchase, @RequestParam("prodNo") int prodNo, HttpSession session) throws Exception{
 		System.out.println("/addPurchase : POST");
 		Product product = productService.getProduct(prodNo);
+		int prodAmount = product.getProdAmount();
 		product.setProTranCode("1");
+		product.setProdAmount(prodAmount-purchase.getTranAmount());
+		productService.updateProduct(product);
 		purchase.setTranCode("1");
 		purchase.setPurchaseProd(product);
 		purchase.setBuyer((User)session.getAttribute("user"));

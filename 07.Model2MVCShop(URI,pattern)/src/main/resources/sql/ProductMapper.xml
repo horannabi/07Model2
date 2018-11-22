@@ -16,19 +16,20 @@
 		<result property="prodNo" 			column="PROD_NO" 		jdbcType="NUMERIC" />
 		<result property="regDate" 				column="REG_DATE" 					jdbcType="DATE" />
 		<result property="proTranCode"		column="TRAN_STATUS_CODE"		jdbcType="CHAR"/>
+		<result property="prodAmount"			column="PROD_AMOUNT"		jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product(PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE ) 
-		VALUES (	seq_product_prod_no.nextval,#{prodName},#{prodDetail},TO_CHAR(TO_DATE(#{manuDate},'yyyy-mm-dd'),'YYYYMMDD'),#{price},#{fileName},sysdate )
+		INTO product(PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE, PROD_AMOUNT ) 
+		VALUES (	seq_product_prod_no.nextval,#{prodName},#{prodDetail},TO_CHAR(TO_DATE(#{manuDate},'yyyy-mm-dd'),'YYYYMMDD'),#{price},#{fileName:VARCHAR},sysdate,#{prodAmount} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="string"		resultMap="productSelectMap">
 		SELECT
-		PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE	
+		PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE, PROD_AMOUNT	
 		FROM product
 		WHERE PROD_NO = #{value}
 	 </select>
@@ -41,7 +42,8 @@
 			PROD_DETAIL = #{prodDetail},
 			MANUFACTURE_DAY = #{manuDate},
 			PRICE =	 #{price},
-			IMAGE_FILE = #{fileName}
+			PROD_AMOUNT = #{prodAmount},
+			IMAGE_FILE = #{fileName:VARCHAR}
 	   	</set>
 	   	WHERE prod_no = #{prodNo}
 	 </update>
@@ -50,7 +52,7 @@
 	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, t.tran_status_code
+	  					FROM		(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, p.prod_amount, t.tran_status_code
 											FROM product p, transaction t
 											<where>
 													p.PROD_NO=t.PROD_NO(+)
@@ -110,7 +112,7 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, t.tran_status_code
+	  	FROM(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, p.prod_amount, t.tran_status_code
 											FROM product p, transaction t
 						
 									<where>

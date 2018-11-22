@@ -102,6 +102,16 @@ public class ProductController {
 		return "forward:/product/getProduct.jsp";	
 	}
 	
+	@RequestMapping(value="getProduct", method=RequestMethod.POST)
+	public String getProduct(@RequestParam("prodNo") int prodNo, Model model) throws Exception { 
+		System.out.println("/getProduct");
+		Product product = productService.getProduct(prodNo);
+		
+		model.addAttribute("product", product);
+
+		return "forward:/product/getProduct.jsp";	
+	}
+	
 	/*@RequestMapping
 	public String history() throws Exception {
 		return "forward:/history.jsp";	
@@ -135,7 +145,7 @@ public class ProductController {
 		
 		productService.updateProduct(product);
 		
-		return "redirect:/getProduct?prodNo="+product.getProdNo();
+		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
 		//포워드하면 string array 오류?
 	}
 

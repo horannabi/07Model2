@@ -17,6 +17,7 @@
 		<result property="receiverPhone"		column="RECEIVER_PHONE"	 	jdbcType="VARCHAR"/>
 		<result property="tranCode"		column="TRAN_STATUS_CODE"		jdbcType="CHAR"/>
 		<result property="tranNo"			column="TRAN_NO"		jdbcType="NUMERIC"/>
+		<result property="tranAmount"			column="TRAN_AMOUNT"		jdbcType="NUMERIC"/>
 	</resultMap>
 
 <!-- SQL : INSERT -->
@@ -24,9 +25,9 @@
 		INSERT
 		INTO TRANSACTION(TRAN_NO, PROD_NO, BUYER_ID, PAYMENT_OPTION, 
 												RECEIVER_NAME, RECEIVER_PHONE, DEMAILADDR,
-												DLVY_REQUEST, TRAN_STATUS_CODE, ORDER_DATA, DLVY_DATE)
+												DLVY_REQUEST, TRAN_STATUS_CODE, ORDER_DATA, DLVY_DATE, TRAN_AMOUNT)
 		VALUES (seq_transaction_tran_no.nextval,#{purchaseProd.prodNo},#{buyer.userId},#{paymentOption}
-							,#{receiverName},#{receiverPhone},#{divyAddr},#{divyRequest},#{tranCode},sysdate,#{divyDate})
+							,#{receiverName},#{receiverPhone},#{divyAddr},#{divyRequest},#{tranCode},sysdate,#{divyDate},#{tranAmount})
 	</insert>
 	  
 	<!-- SQL : SELECT ONE -->
@@ -54,6 +55,7 @@
 	   		DEMAILADDR=#{divyAddr}, 
 	   		DLVY_REQUEST=#{divyRequest},
 	   		DLVY_DATE=#{divyDate} 
+	   		TRAN_AMOUNT=#{tranAmount}
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
@@ -61,7 +63,7 @@
 	 <select  id="getPurchaseList"  parameterType="map" 	resultMap="purchaseSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-						FROM		(	SELECT buyer_id, RECEIVER_NAME, Receiver_phone, TRAN_STATUS_CODE, TRAN_NO
+						FROM		(	SELECT buyer_id, RECEIVER_NAME, Receiver_phone, TRAN_STATUS_CODE, TRAN_NO, TRAN_AMOUNT
 											FROM transaction
 											where buyer_id=#{buyerId} 
 											order by TRAN_NO) inner_table
@@ -82,7 +84,7 @@
 	 <!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="string"	 resultType="int">
 	 SELECT COUNT(*)
-	  	FROM(	SELECT buyer_id, RECEIVER_NAME, Receiver_phone, TRAN_STATUS_CODE
+	  	FROM(	SELECT buyer_id, RECEIVER_NAME, Receiver_phone, TRAN_STATUS_CODE, TRAN_AMOUNT
 	  					from transaction
 	  					where buyer_id=#{value})countTable
 	  	

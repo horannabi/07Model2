@@ -62,7 +62,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0"
 				style="margin-top: 10px;">
 				<tr>
-					<td colspan="11">전체 ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage} 페이지
+					<td colspan="14">전체 ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage} 페이지
 					</td>
 				</tr>
 				<tr>
@@ -72,14 +72,16 @@
 					<td class="ct_line02"></td>
 					<td class="ct_list_b" width="150">회원명</td>
 					<td class="ct_line02"></td>
+					<td class="ct_list_b" width="100">수량</td>
+					<td class="ct_line02"></td>
 					<td class="ct_list_b">전화번호</td>
 					<td class="ct_line02"></td>
 					<td class="ct_list_b">배송현황</td>
 					<td class="ct_line02"></td>
-					<td class="ct_list_b">정보수정</td>
+					<td class="ct_list_b">구매확정</td>
 				</tr>
 				<tr>
-					<td colspan="11" bgcolor="808285" height="1"></td>
+					<td colspan="14" bgcolor="808285" height="1"></td>
 				</tr>
 				<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
 				<%
@@ -139,6 +141,8 @@
 					<td></td>
 					<td align="left">${purchase.receiverName}</td>
 					<td></td>
+					<td align="center">${purchase.tranAmount}</td>
+					<td></td>
 					<td align="left">${purchase.receiverPhone}</td>
 					<td></td>
 					<td align="left">현재 
@@ -162,7 +166,7 @@
 
 				</tr>
 				<tr>
-					<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+					<td colspan="14" bgcolor="D6D7D6" height="1"></td>
 				</tr>	
 				</c:forEach>
 			</table>
