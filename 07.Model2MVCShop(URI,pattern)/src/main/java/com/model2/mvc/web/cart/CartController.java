@@ -83,7 +83,7 @@ public class CartController {
 	}
 	
 	@RequestMapping(value="listCart")
-	public String listProduct(@ModelAttribute("search")Search search, HttpSession session, Model model) throws Exception{
+	public String listCart(@ModelAttribute("search")Search search, HttpSession session, Model model) throws Exception{
 		System.out.println("/listCart");
 		
 		if(search.getCurrentPage() ==0 ){
@@ -104,6 +104,22 @@ public class CartController {
 		model.addAttribute("search", search);
 		
 		return "forward:/cart/listCart.jsp";
+	}
+	
+	@RequestMapping(value="deleteCart")
+	public String deleteCart(@RequestParam("prodNo") int prodNo, HttpSession session, Model model) throws Exception{
+		System.out.println("/deleteCart");
+		//ProductService productService = new ProductServiceImpl();
+		Cart cart = new Cart();
+		Product cartProd=new Product();
+		cartProd.setProdNo(prodNo);
+		cart.setCartProd(cartProd);
+		cart.setCartUserId(((User)session.getAttribute("user")).getUserId());
+		
+		//model.addAttribute("cart", cart);
+		cartService.deleteCart(cart);
+		
+		return "redirect:/cart/listCart";
 	}
 	/*@RequestMapping("/updatePurchaseView")
 	public String updatePurchaseView(@RequestParam("tranNo") int tranNo, Model model) throws Exception{

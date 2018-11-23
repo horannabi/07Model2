@@ -1,7 +1,7 @@
 package com.model2.mvc.service.domain;
 
 public class Cart {
-	private Product cartProd;
+	private Product cartProd;	//name, price
 	private int cartNo;
 	private String cartUserId;
 	private int cartAmount;

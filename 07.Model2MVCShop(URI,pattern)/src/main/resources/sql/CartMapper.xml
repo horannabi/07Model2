@@ -13,6 +13,9 @@
 		<result property="cartUserId" 				column="user_id" 					jdbcType="VARCHAR" />
 		<result property="cartAmount"		column="cart_amount"		jdbcType="NUMERIC"/>
 		<result property="cartCode"			column="cart_code"		jdbcType="CHAR"/>
+		<result property="cartProd.price"			column="price"		jdbcType="NUMERIC"/>
+		<result property="cartProd.prodName" 				column="PROD_NAME" 					jdbcType="VARCHAR" />
+		<result property="cartProd.prodAmount"			column="PROD_AMOUNT"		jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<insert id="addCart"		parameterType="cart">
@@ -23,26 +26,26 @@
 	
 	<delete id="deleteCart" 	parameterType="cart">
 		delete 
-		from transaction 
-		where PROD_NO=#{cartProdNo} and user_id=#{cartUserId} and cart_code='1'
+		from cart 
+		where PROD_NO=#{cartProd.prodNo} and user_id=#{cartUserId} and cart_code='1'
 	</delete>
 	
 	<select  id="getCartList"  parameterType="map" 	resultMap="cartSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-						FROM		(	SELECT cart_no, prod_no, user_id, cart_amount, cart_code
-	  								from cart
-	  								where user_id=#{userCartId} 
-											order by cart_no) inner_table
+						FROM		(	SELECT c.cart_no, c.prod_no, c.user_id, c.cart_amount, c.cart_code, p.price, p.prod_name, p.prod_amount
+	  								from cart c, product p
+	  								where c.user_id=#{userCartId}  and c.prod_no=p.prod_no
+											order by c.cart_no) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 	 </select>
 	
 	<select id="getTotalCount"	parameterType="string"		resultType="int">
 		SELECT COUNT(*)
-	  		FROM(	SELECT cart_no, prod_no, user_id, cart_amount, cart_code
-	  								from cart
-	  								where user_id=#{value})countTable
+	  		FROM(	SELECT c.cart_no, c.prod_no, c.user_id, c.cart_amount, c.cart_code, p.price, p.prod_name, p.prod_amount
+	  								from cart c, product p
+	  								where c.user_id=#{userCartId}  and c.prod_no=p.prod_no)countTable
 	</select>
 	
 </mapper>
